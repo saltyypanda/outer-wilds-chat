@@ -1,0 +1,14 @@
+{
+  "name": "outer-wilds-chat",
+  "version": "1.0.0",
+  "description": "Transparent Outer Wilds chat overlay",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^38.0.0"
+  }
+}
