@@ -16,16 +16,16 @@ try {
 
 const DEFAULT_MODEL = "gpt-5-mini";
 
-function buildInput(history = [], userMessage) {
+function buildInput(history, userMessage) {
   const items = history.map((msg) => ({
     role: msg.role,
-    content: msg.content,
+    content: `[${msg.timestamp}] ${msg.content}`,
   }));
 
   if (userMessage && userMessage.trim()) {
     items.push({
       role: "user",
-      content: userMessage.trim(),
+      content: `[${new Date().toISOString()}] ${userMessage.trim()}`,
     });
   }
 
@@ -34,7 +34,7 @@ function buildInput(history = [], userMessage) {
 
 async function generateReply({
   systemPrompt,
-  history = [],
+  history,
   userMessage,
   model = DEFAULT_MODEL,
   maxOutputTokens = 800,
@@ -45,6 +45,10 @@ async function generateReply({
 
   if (!userMessage || !userMessage.trim()) {
     throw new Error("generateReply: userMessage is required");
+  }
+
+  if (!history) {
+    history = [];
   }
 
     const response = await client.responses.create({

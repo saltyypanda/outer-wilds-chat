@@ -11,6 +11,8 @@ body {
 :root {
   --gap: 6px;
 
+  --error: #ff6b6b;
+
   --panel-bg: rgba(11, 10, 20, 0.45);
   --sidebar-bg: rgba(6, 6, 14, 0.6);
   --selected-button-bg: rgba(9, 49, 100, 0.5);
@@ -91,7 +93,7 @@ body.grid {
 
   padding: 25px 25px;
   border-radius: 4px 4px 0 0;
-  overflow: hidden;
+  overflow-y: scroll;
   font-family: "Courier New", Courier, monospace;
 }
 

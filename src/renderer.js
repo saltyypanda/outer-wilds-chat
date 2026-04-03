@@ -110,6 +110,7 @@ input.addEventListener("keydown", async (event) => {
 
     const { text } = await generateReply({
       systemPrompt: prompt,
+      history: state.messages,
       userMessage,
     });
 
@@ -126,7 +127,7 @@ input.addEventListener("keydown", async (event) => {
     setStatus("connected");
   } catch (error) {
     stopAnimatedStatus();
-    console.error(error);
+    alert(error);
     setStatus("signal lost");
     messageEl.textContent = "The signal scattered into the dark. Try again.";
   } finally {
