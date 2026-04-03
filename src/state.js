@@ -4,7 +4,7 @@ const planetToSpeaker = {
   "ember-twin": "CHERT",
   "brittle-hollow": "RIEBECK",
   "giants-deep": "GABBRO",
-  "attlerock": "FELDSPAR",
+  "dark-bramble": "FELDSPAR",
 };
 
 const state = {

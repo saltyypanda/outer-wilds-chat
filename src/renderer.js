@@ -1,19 +1,20 @@
 const {
-  getMessageAt,
-  getMessageCount,
-} = require("./loader.js");
-
-const {
   state,
   setSelectedPlanet,
   clearSelectedPlanet,
-  setCurrentIndex,
-  setMessages,
   addMessage
 } = require("./state.js");
 
 const { generateReply } = require("./llmAgent.js");
 const { planetToPrompt } = require("./prompts.js");
+const {
+  playSignalAudio,
+  fadeOutAndStop,
+  playClickAudio,
+  playMessageSentAudio,
+  playMessageReceivedAudio,
+  playSweepAudio,
+} = require("./audio.js");
 
 const headerEl = document.getElementById("header");
 const speakerEl = document.getElementById("speaker");
@@ -106,12 +107,15 @@ async function startChat() {
   await sleep(Math.random() * 100 + 1200);
   setStatus("connected");
   input.placeholder = "Send transmission...";
+
+  playSignalAudio(state.selectedPlanet);
 }
 
 input.addEventListener("keydown", async (event) => {
   if (event.key !== "Enter") return;
   event.preventDefault();
 
+  playMessageSentAudio();
   if (isBusy) return;
 
   const userMessage = input.value.trim();
@@ -146,6 +150,7 @@ input.addEventListener("keydown", async (event) => {
     });
 
     stopAnimatedStatus();
+    playMessageReceivedAudio();
     setStatus("incoming transmission...");
     await sleep(500);
 
@@ -169,6 +174,7 @@ input.addEventListener("keydown", async (event) => {
 
 buttons.forEach((button) => {
   button.addEventListener("click", async () => {
+    playClickAudio();
     if (isBusy) return;
 
     buttons.forEach((b) => b.classList.remove("selected"));
@@ -177,14 +183,17 @@ buttons.forEach((button) => {
     const planetId = button.dataset.planet;
     setSelectedPlanet(planetId);
 
+    fadeOutAndStop();
     startChat();
   });
 });
 
 disconnectButton.addEventListener("click", () => {
+  playClickAudio();
   if (isBusy) return;
 
   stopAnimatedStatus();
+  fadeOutAndStop();
   clearSelectedPlanet();
 
   buttons.forEach((b) => b.classList.remove("selected"));
