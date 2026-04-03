@@ -104,7 +104,7 @@ input.addEventListener("keydown", async (event) => {
     const prompt = planetToPrompt[state.selectedPlanet];
 
     setStatus("transmission sent successfully.");
-    await sleep(500);
+    await sleep(1500);
 
     startAnimatedStatus("awaiting reply");
 
