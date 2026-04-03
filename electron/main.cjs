@@ -1,26 +1,26 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const path = require("path");
+const { app, BrowserWindow } = require("electron");
+
+require("electron-reload")(path.join(__dirname, ".."));
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 420,
-    height: 260,
-    x: 400,
-    y: 40,
-    frame: false,
+    width: 520,
+    height: 360,
     transparent: true,
-    hasShadow: false,
-    resizable: false,
+    frame: false,
     alwaysOnTop: true,
-    skipTaskbar: true,
+    resizable: false,
+    hasShadow: false,
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
       preload: path.join(__dirname, 'preload.cjs'),
-      contextIsolation: true,
-      nodeIntegration: false
     }
   });
 
-  win.loadFile('index.html');
+  win.loadFile(path.join(__dirname, "..", "src", "index.html"));
+  win.setPosition(1350, 100);
 }
 
 app.whenReady().then(() => {

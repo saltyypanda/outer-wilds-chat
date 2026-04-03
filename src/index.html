@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Outer Wilds Chat</title>
-    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <div class="panel">
       <div class="header">TIMBER HEARTH SIGNAL</div>
@@ -13,6 +19,13 @@
       <div class="status" id="status">incoming transmission...</div>
       <div class="message" id="message"></div>
     </div>
+
+    <input
+      id="user-input"
+      type="text"
+      placeholder="Send transmission..."
+      class="input input-sm flex-1"
+    />
 
     <script src="renderer.js"></script>
   </body>

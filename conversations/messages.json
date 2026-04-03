@@ -1,0 +1,22 @@
+[
+  {
+    "speaker": "GABBRO",
+    "text": "Hey, no rush. You've still got time to breathe.",
+    "timestamp": "2024-06-01T12:00:00Z"
+  },
+  {
+    "speaker": "CHERT",
+    "text": "I don't mean to worry you, but the stars feel strange today.",
+    "timestamp": "2024-06-01T12:01:00Z"
+  },
+  {
+    "speaker": "FELDSPAR",
+    "text": "If something looks dangerous, that's usually where the good stuff is.",
+    "timestamp": "2024-06-01T12:02:00Z"
+  },
+  {
+    "speaker": "RIEBECK",
+    "text": "I know it's scary, but learning things usually is.",
+    "timestamp": "2024-06-01T12:03:00Z"
+  }
+]
