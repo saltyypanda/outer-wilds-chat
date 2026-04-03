@@ -10,6 +10,7 @@ const speakerEl = document.getElementById("speaker");
 const statusEl = document.getElementById("status");
 const messageEl = document.getElementById("message");
 const input = document.getElementById("user-input");
+const buttons = document.querySelectorAll(".img-button");
 
 function loadMessages() {
   try {
@@ -90,6 +91,13 @@ input.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     addMessage("CHERT");
   }
+});
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    buttons.forEach((b) => b.classList.remove("selected"));
+    button.classList.add("selected");
+  });
 });
 
 runCycle();

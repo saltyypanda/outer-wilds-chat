@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body>
+  <body class="grid">
     <div class="panel">
       <div class="header">TIMBER HEARTH SIGNAL</div>
       <div class="speaker" id="speaker">GABBRO</div>
@@ -20,12 +20,25 @@
       <div class="message" id="message"></div>
     </div>
 
-    <input
-      id="user-input"
-      type="text"
-      placeholder="Send transmission..."
-      class="input input-sm flex-1"
-    />
+    <aside class="sidebar">
+      <button class="img-button"><img src="../assets/transparent/ember-twin.png" alt="Disconnect" /></button>
+      <button class="img-button"><img src="../assets/transparent/brittle-hollow.png" alt="Disconnect" /></button>
+      <button class="img-button"><img src="../assets/transparent/giants-deep.png" alt="Disconnect" /></button>
+      <button class="img-button"><img src="../assets/transparent/dark-bramble.png" alt="Disconnect" /></button>
+    </aside>
+
+    <div class="bottom-bar">
+      <button id="disconnect-button">
+        <img src="../assets/call-end-icon.svg" alt="Disconnect" />
+      </button>
+
+      <input
+        id="user-input"
+        type="text"
+        placeholder="Send transmission..."
+        class="input input-sm flex-1"
+      />
+    </div>
 
     <script src="renderer.js"></script>
   </body>
