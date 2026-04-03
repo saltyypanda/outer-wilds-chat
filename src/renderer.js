@@ -6,6 +6,7 @@ const {
 const {
   state,
   setSelectedPlanet,
+  clearSelectedPlanet,
   setCurrentIndex,
   setMessages,
   addMessage
@@ -20,6 +21,7 @@ const statusEl = document.getElementById("status");
 const messageEl = document.getElementById("message");
 const input = document.getElementById("user-input");
 const buttons = document.querySelectorAll(".img-button");
+const disconnectButton = document.getElementById("disconnect-button");
 
 let statusInterval = null;
 let isBusy = false;
@@ -61,18 +63,29 @@ function setBusyState(busy) {
     document.body.classList.add("busy");
   } else {
     input.disabled = false;
-    input.placeholder = "Send transmission...";
+    input.placeholder = state.selectedPlanet
+      ? "Send transmission..."
+      : "Select a signal to begin...";
     document.body.classList.remove("busy");
     input.focus();
   }
 }
 
+function resetChatUI() {
+  headerEl.textContent = "NO SIGNAL";
+  speakerEl.textContent = "";
+  setStatus("no active signal");
+  messageEl.textContent = "";
+}
+
 async function typeMessage(text) {
+  messageEl.style.color = "var(--text)";
   messageEl.textContent = "";
   document.body.classList.add("receiving");
 
   for (let i = 0; i < text.length; i++) {
     messageEl.textContent += text[i];
+    messageEl.scrollTop = messageEl.scrollHeight;
     await sleep(35 + Math.random() * 20);
   }
 
@@ -80,6 +93,11 @@ async function typeMessage(text) {
 }
 
 async function startChat() {
+  if (!state.selectedPlanet || !state.selectedSpeaker) {
+    resetChatUI();
+    return;
+  }
+
   headerEl.textContent = `${state.selectedPlanet.split("-").join(" ").toUpperCase()} SIGNAL`;
   speakerEl.textContent = state.selectedSpeaker;
   setStatus(`locating ${state.selectedSpeaker}'s signal...`);
@@ -87,6 +105,7 @@ async function startChat() {
 
   await sleep(Math.random() * 100 + 1200);
   setStatus("connected");
+  input.placeholder = "Send transmission...";
 }
 
 input.addEventListener("keydown", async (event) => {
@@ -98,12 +117,24 @@ input.addEventListener("keydown", async (event) => {
   const userMessage = input.value.trim();
   if (!userMessage) return;
 
+  if (!state.selectedPlanet || !state.selectedSpeaker) {
+    startAnimatedStatus("searching for signal");
+    await sleep(1000 + Math.random() * 2000);
+    stopAnimatedStatus();
+
+    setStatus("no signal target");
+    messageEl.style.color = "var(--error)";
+    messageEl.textContent = "Your transmission was lost in space.";
+    input.value = "";
+    return;
+  }
+
   try {
     setBusyState(true);
 
     const prompt = planetToPrompt[state.selectedPlanet];
 
-    setStatus("transmission sent successfully.");
+    setStatus("transmission sent successfully");
     await sleep(1500);
 
     startAnimatedStatus("awaiting reply");
@@ -127,9 +158,10 @@ input.addEventListener("keydown", async (event) => {
     setStatus("connected");
   } catch (error) {
     stopAnimatedStatus();
-    alert(error);
+    console.error(error);
     setStatus("signal lost");
-    messageEl.textContent = "The signal scattered into the dark. Try again.";
+    messageEl.style.color = "var(--error)";
+    messageEl.textContent = "Your transmission was lost in space. Try again.";
   } finally {
     setBusyState(false);
   }
@@ -148,3 +180,15 @@ buttons.forEach((button) => {
     startChat();
   });
 });
+
+disconnectButton.addEventListener("click", () => {
+  if (isBusy) return;
+
+  stopAnimatedStatus();
+  clearSelectedPlanet();
+
+  buttons.forEach((b) => b.classList.remove("selected"));
+  resetChatUI();
+});
+
+resetChatUI();

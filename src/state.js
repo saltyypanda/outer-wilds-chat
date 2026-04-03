@@ -8,9 +8,9 @@ const planetToSpeaker = {
 };
 
 const state = {
-  selectedPlanet: "ember-twin",
-  selectedSpeaker: planetToSpeaker["ember-twin"],
-  messages: loadMessages("ember-twin"),
+  selectedPlanet: null,
+  selectedSpeaker: null,
+  messages: [],
   currentIndex: 0,
   date: new Date().toISOString().split("T")[0],
 };
@@ -28,6 +28,13 @@ function setSelectedPlanet(planetId) {
   state.messages = loadMessages(planetId, date);
 }
 
+function clearSelectedPlanet() {
+  state.selectedPlanet = null;
+  state.selectedSpeaker = null;
+  state.messages = [];
+  state.currentIndex = 0;
+}
+
 function setCurrentIndex(index) {
   state.currentIndex = index;
 }
@@ -38,7 +45,7 @@ function setMessages(messages) {
 
 function addMessage(speaker, text) {
   const trimmed = text.trim();
-  if (!trimmed) return;
+  if (!trimmed || !state.selectedPlanet) return;
 
   const newMessage = {
     role: speaker,
@@ -47,7 +54,6 @@ function addMessage(speaker, text) {
   };
 
   state.messages.push(newMessage);
-
   saveMessages(state.selectedPlanet, state.date, state.messages);
 }
 
@@ -55,6 +61,7 @@ module.exports = {
   state,
   planetToSpeaker,
   setSelectedPlanet,
+  clearSelectedPlanet,
   setCurrentIndex,
   setMessages,
   addMessage,
