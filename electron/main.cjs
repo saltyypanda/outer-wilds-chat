@@ -1,4 +1,5 @@
 const path = require("path");
+require("dotenv").config();
 const { app, BrowserWindow } = require("electron");
 
 require("electron-reload")(path.join(__dirname, ".."));
