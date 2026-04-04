@@ -100,7 +100,7 @@ function playMessageSentAudio() {
 
 function playMessageReceivedAudio() {
   const receivedAudio = new Audio(getAudioSrc("message-received"));
-  receivedAudio.volume = 0.3;
+  receivedAudio.volume = 0.2;
   receivedAudio.play().catch((error) => {
     console.error("Failed to play message received audio:", error);
   });
